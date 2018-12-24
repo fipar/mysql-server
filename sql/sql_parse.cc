@@ -2535,6 +2535,16 @@ int mysql_execute_command(THD *thd, bool first_level) {
   thd->work_part_info = 0;
 
   /*
+   I think this is the best place to check for this but I am not sure.
+  */
+  if (thd->variables.reject_queries)
+  {
+      my_message(ER_UNKNOWN_COM_ERROR,
+                 "reject_queries has been set. ", MYF(0));
+      err_readonly(thd);
+      DBUG_RETURN(-1);
+  }
+  /*
     Each statement or replication event which might produce deadlock
     should handle transaction rollback on its own. So by the start of
     the next statement transaction rollback request should be fulfilled

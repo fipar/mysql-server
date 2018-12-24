@@ -936,6 +936,7 @@ ulong opt_keyring_migration_port = 0;
 bool migrate_connect_options = 0;
 uint host_cache_size;
 ulong log_error_verbosity = 3;  // have a non-zero value during early start-up
+bool reject_queries = 0;
 
 #if defined(_WIN32)
 /*
@@ -8746,6 +8747,7 @@ static int mysql_init_variables() {
     }
   }
 #endif
+  reject_queries = 0;
 
   return 0;
 }

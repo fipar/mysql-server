@@ -6196,3 +6196,12 @@ static Sys_var_bool Sys_sql_require_primary_key{
     NO_MUTEX_GUARD,
     IN_BINLOG,
     ON_CHECK(check_has_super)};
+
+static Sys_var_bool Sys_reject_queries(
+    "reject_queries",
+    "Reject all client queries. "
+    "Causes them to fail with error 1047 (Unknown command). "
+    "Defaults to disabled.",
+    HINT_UPDATEABLE GLOBAL_VAR(reject_queries), CMD_LINE(OPT_ARG), DEFAULT(false),
+    NO_MUTEX_GUARD, NOT_IN_BINLOG, ON_CHECK(0),
+    ON_UPDATE(NULL));
